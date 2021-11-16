@@ -16,7 +16,7 @@ public class CategoriasService {
 	
 	@Autowired
 	private CategoriasRepository cr;
-	
+/*	
 	@PostConstruct
 	public void cargarCategorias() {
 		Categorias c = new Categorias("Accion","Género en el que el jugador debe usar su velocidad, destreza y tiempo de reacción.");
@@ -28,7 +28,7 @@ public class CategoriasService {
 		c = new Categorias("Acción-Aventura","Género que combina elementos del género aventura con elementos del género acción.");
 		cr.save(c);
 	}
-	
+*/
 	public String buscarCategoriaNombre(int id) {
 		return cr.findById(id).getNombre();
 	}

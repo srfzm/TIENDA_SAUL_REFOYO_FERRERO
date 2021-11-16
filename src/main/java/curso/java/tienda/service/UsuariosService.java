@@ -18,15 +18,13 @@ public class UsuariosService {
 	
 	@Autowired
 	private UsuariosRepository ur;
-
+/*
 	@PostConstruct
 	public void cargarUsuarios() {
 		Base64 base64 = new Base64();
 		String pass = new String(base64.encode("1234".getBytes()));
 		Usuarios u = new Usuarios(1,"Admin","admin@admin.com", pass);
 		ur.save(u);
-		/*u = new Usuarios(2,"Ramon", "ramon@correo.com", pass);
-		ur.save(u);*/
 		u = new Usuarios(2, "ramon@correo.com", pass, "Ramón", "Garcia", "Marquez", "Llano Ponte", "Aviles", "Aviles", "648542876", "65638534N");
 		ur.save(u);
 		u = new Usuarios(2, "mario@correo.com", pass, "Mario", "Lopez", "Labrador", "Conde Ponte", "Gijon", "Gijon", "866482876", "86465534N");
@@ -38,7 +36,7 @@ public class UsuariosService {
 		u = new Usuarios(3, "rodri@correo.com", pass, "Rodriguez", "Valle", "Puertas", "San Vitero", "Madrid", "Madrid", "648435428", "76859834N");
 		ur.save(u);
 	}
-	
+*/	
 	public boolean comprobarLogin(Usuarios usuario) {
 		boolean result = false;
 		

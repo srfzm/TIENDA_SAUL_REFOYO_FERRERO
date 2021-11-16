@@ -19,7 +19,7 @@ public class ProductosService {
 
 	@Autowired
 	private ProductosRepository pr;
-	
+/*	
 	@PostConstruct
 	public void cargarProductos() {
 		SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:s dd-MM-yyyy");
@@ -49,7 +49,7 @@ public class ProductosService {
 			e.printStackTrace();
 		}
 	}
-	
+*/	
 	public List<Productos> listaProductos() {
 		return pr.findAll();
 	}

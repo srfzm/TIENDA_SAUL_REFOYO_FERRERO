@@ -16,7 +16,7 @@ public class ConfiguracionService {
 
 	@Autowired
 	private ConfiguracionRepository confr;
-	
+/*
 	@PostConstruct
 	public void cargarConfiguracion() {
 		Configuracion conf = new Configuracion("direccion", "Calle La Mentira", "texto");
@@ -30,7 +30,7 @@ public class ConfiguracionService {
 		conf = new Configuracion("numFactura", "0", "numero");
 		confr.save(conf);
 	}
-	
+*/	
 	public HashMap<String, String> mapaConfiguracion() {
 		List<Configuracion> lista = confr.findAll();
 		HashMap<String, String> mapa = new HashMap<String, String>();

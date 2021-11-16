@@ -25,7 +25,7 @@ public class OpcionesMenuService {
 	public List<OpcionesMenu> menu(int rolId) {
 		return mr.findByIdRol(rolId);
 	}
-	
+/*	
 	@PostConstruct
 	public void cargarOpciones() {
 		OpcionesMenu op = new OpcionesMenu(1, "Listado", "Pedidos", "pedidos/pedido");
@@ -75,7 +75,7 @@ public class OpcionesMenuService {
 		op = new OpcionesMenu(4, "Catalogo", "Productos", "productos/");
 		mr.save(op);
 	}
-	
+*/	
 	public HashMap<Integer, HashMap<String, ArrayList<OpcionesMenu>>> cargarMenu() {
 		
 		List<Roles> lista = rs.listadoRoles();

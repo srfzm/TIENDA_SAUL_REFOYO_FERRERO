@@ -16,7 +16,7 @@ public class MetodosPagoService {
 
 	@Autowired
 	private MetodosPagoRepository mr;
-	
+/*
 	@PostConstruct
 	public void cargarMetodosPago() {
 		MetodosPago mt = new MetodosPago("tarjeta");
@@ -24,7 +24,7 @@ public class MetodosPagoService {
 		mt = new MetodosPago("paypal");
 		mr.save(mt);
 	}
-	
+*/	
 	public String buscarMetodo(int idMetdod) {
 		return mr.findById(idMetdod).getMetodoPago();
 	}

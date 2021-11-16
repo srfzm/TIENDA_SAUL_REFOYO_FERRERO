@@ -15,7 +15,7 @@ public class RolesService {
 
 	@Autowired
 	private RolesRepository rr;
-	
+/*
 	@PostConstruct
 	public void cargarRoles() {
 		Roles r = new Roles("Administrador");
@@ -27,7 +27,7 @@ public class RolesService {
 		r = new Roles("Anonimo");
 		rr.save(r);
 	}
-	
+*/	
 	public List<Roles> listadoRoles() {
 		return rr.findAll();
 	}

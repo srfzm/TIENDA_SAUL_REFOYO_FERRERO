@@ -58,8 +58,6 @@ public class ProductosController {
 	@RequestMapping("")
 	public String vistaProductos(Model model, HttpSession sesion, @RequestParam(required = false) String categoria, @RequestParam(required = false) String orden) {
 		
-		System.out.println(categoria);
-		System.out.println(orden);
 		model.addAttribute("categoria", (categoria==null) ? 0 : categoria);
 		model.addAttribute("orden", (orden==null) ? 0 : orden);
 		//model.addAttribute("productos", ps.listaProductos());
