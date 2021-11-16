@@ -1,0 +1,60 @@
+<!-- Top bar-->
+      <div th:fragment="topbar" class="top-bar py-2" id="topBar" style="background: #555">
+        <div class="container px-lg-0 text-light py-1">
+          <div class="row d-flex align-items-center">
+            <div class="col-md-6 d-md-block d-none">
+              <p class="mb-0 text-xs" th:text="${configuracion.get('nombreTienda')}">Universal Games.</p>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex justify-content-md-end justify-content-between">
+                <ul class="list-inline d-block d-md-none mb-0">
+                  <li class="list-inline-item"><a class="text-xs" href="#"><i class="fa fa-phone"></i></a></li>
+                  <li class="list-inline-item"><a class="text-xs" href="#"><i class="fa fa-envelope"></i></a></li>
+                </ul>
+                <ul class="list-inline mb-0">
+                  <li th:if="${session.usuario==null}" class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" href="#" data-bs-toggle="modal" data-bs-target="#login-modal"><i class="fas fa-door-open me-2"></i><span class="d-none d-md-inline-block">Iniciar Sesión</span></a></li>
+                  <li th:if="${session.usuario==null}" class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" th:href="@{/login/registroform}"><i class="fas fa-user me-2"></i><span class="d-none d-md-inline-block">Registrarse</span></a></li>
+                  <li th:if="${session.usuario!=null}" class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" th:href="@{/login//logout}"><i class="fas fa-user me-2"></i><span class="d-none d-md-inline-block">Log Out</span></a></li>
+                  <li class="list-inline-item"><a class="text-xs text-uppercase fw-bold text-reset" th:href="@{/productos/carrito}"><i class="fas fa-shopping-basket me-2"></i><span class="d-none d-md-inline-block">Cesta</span></a></li>
+                </ul>
+                <!--  
+                <ul class="list-inline mb-0 ms-lg-4">
+                  <li class="list-inline-item text-gray-600 m-0"><a class="text-xs social-link-hover" href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                  <li class="list-inline-item text-gray-600 m-0"><a class="text-xs social-link-hover" href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                  <li class="list-inline-item text-gray-600 m-0"><a class="text-xs social-link-hover" href="#" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                  <li class="list-inline-item text-gray-600 m-0"><a class="text-xs social-link-hover" href="#" title="Email"><i class="fas fa-envelope"></i></a></li>
+                </ul>
+                -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Top bar end-->
+      <!-- Login Modal-->
+      <div th:fragment="modal" class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="login-modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-uppercase" id="login-modalLabel">Login</h4>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form th:action="@{/login/login}" th:object="${usuario}" class="login-form" method="post">
+                <div class="form-group mb-3">
+                  <input class="form-control" type="email" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group mb-3">
+                  <input class="form-control" type="password" id="contrasena" name="clave" placeholder="Contraseña">
+                </div>
+                <p class="text-center">
+                  <button class="btn btn-outline-primary"><i class="fas fa-door-open"></i> Log in</button>
+                </p>
+              </form>
+              <p class="text-center text-muted small">Not registered yet?</p>
+              <p class="text-center text-muted small"><a href="customer-register.html"><strong>Register now</strong></a>! It is easy and done in 1 minute and gives you access to special discounts and much more!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Login modal end-->
