@@ -32,7 +32,7 @@ public class Utilidades {
 	
 	public HashMap<String, ArrayList<OpcionesMenu>> menu(HttpSession sesion) {
 
-		int idRol = (sesion.getAttribute("usuario")==null) ? 4 : (int)sesion.getAttribute("usuario");
+		int idRol = (sesion.getAttribute("rol")==null) ? 4 : (int)sesion.getAttribute("rol");
 		
 		if(!menu.containsKey(idRol)) {
 			return null;
