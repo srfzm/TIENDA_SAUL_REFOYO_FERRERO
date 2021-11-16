@@ -25,7 +25,17 @@ public class UsuariosService {
 		String pass = new String(base64.encode("1234".getBytes()));
 		Usuarios u = new Usuarios(1,"Admin","admin@admin.com", pass);
 		ur.save(u);
-		u = new Usuarios(2,"Ramon", "ramon@correo.com", pass);
+		/*u = new Usuarios(2,"Ramon", "ramon@correo.com", pass);
+		ur.save(u);*/
+		u = new Usuarios(2, "ramon@correo.com", pass, "Ramón", "Garcia", "Marquez", "Llano Ponte", "Aviles", "Aviles", "648542876", "65638534N");
+		ur.save(u);
+		u = new Usuarios(2, "mario@correo.com", pass, "Mario", "Lopez", "Labrador", "Conde Ponte", "Gijon", "Gijon", "866482876", "86465534N");
+		ur.save(u);
+		u = new Usuarios(2, "marta@correo.com", pass, "Marta", "Perez", "Ferrero", "San Miguel", "Madrid", "Madrid", "648875428", "63859834N");
+		ur.save(u);
+		u = new Usuarios(3, "manuel@correo.com", pass, "Manuel", "Zapatero", "Castaño", "Alfonso XX", "Cartagena", "Murcia", "985648428", "97466385N");
+		ur.save(u);
+		u = new Usuarios(3, "rodri@correo.com", pass, "Rodriguez", "Valle", "Puertas", "San Vitero", "Madrid", "Madrid", "648435428", "76859834N");
 		ur.save(u);
 	}
 	
