@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +37,7 @@ public class Login {
 	Utilidades ut;
 	@Autowired
 	RolesService rs;
+	private static final Logger logger = LogManager.getLogger(Login.class);
 	
 	@GetMapping("/form")
 	public String vistaLogin(Model model, HttpSession sesion) {
@@ -60,6 +63,7 @@ public class Login {
 		usuario.setClave(pass);
 		if(us.comprobarLogin(usuario)) {
 			//sesion.setAttribute("usuario", usuario);
+			logger.info("Acceso por login a la aplicación");
 			Usuarios tmp = us.getUsuario(usuario);
 			sesion.setAttribute("usuario", tmp.getId());
 			sesion.setAttribute("rol", tmp.getIdRol());
@@ -67,6 +71,7 @@ public class Login {
 		}
 		
 		//model.addAttribute("mensaje", "Login incorrecto");
+		logger.info("Acceso incorrecto a la aplicación");
 		model.addAttribute("opciones",ut.menu(sesion));
 		model.addAttribute("configuracion",ut.mapaConf());
 		return "login/formlogin";
@@ -84,6 +89,7 @@ public class Login {
 		}*/
 		
 		if(bindingResult.hasErrors()) {
+			logger.info("Intento de registro incorrecto");
 			//model.addAttribute("usuario",usuario);
 			model.addAttribute("opciones",ut.menu(sesion));
 			model.addAttribute("configuracion",ut.mapaConf());
@@ -101,12 +107,14 @@ public class Login {
 		
 		//model.addAttribute("mensaje", "Login incorrecto");
 		//return "login/formlogin";
+		logger.info("Registro de un cliente en la aplicación.");
 		return "redirect:/productos";
 	}
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession sesion) {		
 		sesion.setAttribute("usuario", null);
+		sesion.setAttribute("rol", null);
 		//TODO: asignar rol anonimo
 		return "redirect:/productos";
 	}

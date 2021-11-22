@@ -41,10 +41,11 @@
     <header th:replace="@{/general/navbar}::navbar"></header>
       <!-- TEXT SECTION-->
       <section class="py-5 m-3">
+      <h2 class="lined lined-center text-uppercase mb-4">Pedidos para Procesar</h2>
 		<table class="table">
 		  <thead class="thead-light">
 		    <tr>
-		    <th scope="col">Numero Factura</th>
+		    <th scope="col">Id</th>
 		      <th scope="col">Fecha</th>
 		      <th scope="col">Metodo Pago</th>
 		      <th scope="col">Total</th>
@@ -53,7 +54,7 @@
 		  </thead>
 		  <tbody>
 		    <tr th:each="pedido : ${pedidos}">
-		      <td th:text="${pedido.numFactura}"></td>
+		      <td th:text="${pedido.id}"></td>
 		      <td th:text="${pedido.fecha}"></td>
 		      <td th:text="${pedido.metodoPago}"></td>
 		      <td th:text="${pedido.total}"></td>

@@ -16,6 +16,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,6 +56,7 @@ public class ProductosController {
 	private CategoriasService cs;
 	@Autowired
 	private MetodosPagoService ms;
+	private static final Logger logger = LogManager.getLogger(ProductosController.class);
 	
 	@RequestMapping("")
 	public String vistaProductos(Model model, HttpSession sesion, @RequestParam(required = false) String categoria, @RequestParam(required = false) String orden) {
@@ -76,6 +79,7 @@ public class ProductosController {
 		model.addAttribute("configuracion",ut.mapaConf());
 		model.addAttribute("modo","crear");
 		model.addAttribute("categorias",cs.mapaCategorias());
+		model.addAttribute("titulo","Crear Nuevo Producto");
 		return "productos/productoform";
 	}
 	
@@ -93,6 +97,7 @@ public class ProductosController {
 		model.addAttribute("modo","modificar");
 		model.addAttribute("idProducto",id);
 		model.addAttribute("categorias",cs.mapaCategorias());
+		model.addAttribute("titulo","Modificar Producto");
 		return "productos/productoform";
 	}
 	
@@ -111,6 +116,7 @@ public class ProductosController {
 			    Files.copy(file.getInputStream(), Paths.get(ruta));
 			}
 		} catch (IOException e) {
+			logger.warn("Error al crear el fichero de imagen");
 			System.out.println(e);
 			//throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
 		} finally {
@@ -119,8 +125,9 @@ public class ProductosController {
 		    producto.setFechaAlta(java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
 			producto.setFechaBaja(java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
 			ps.guardarProducto(producto);
+			logger.info("Creado un nuevo producto");
 		}
-		return "redirect:/productos";
+		return "redirect:/productos/lista";
 	}
 	
 	@PostMapping("/update/{id}")
@@ -138,18 +145,21 @@ public class ProductosController {
 			    Files.copy(file.getInputStream(), Paths.get(ruta));
 			}
 		} catch (IOException e) {
+			logger.warn("Error al modificar la imagen");
 			System.out.println(e);
 			//throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
 		} finally {
 			ps.modificarProducto(producto, id);
+			logger.info("Modificado un producto");
 		}
-		return "redirect:/productos";
+		return "redirect:/productos/lista";
 	}
 	
 	@GetMapping("/borrar/{id}")
 	public String deleteUsuario(Model model, @PathVariable("id") int id) {
 		ps.borrarProducto(id);
-		return "redirect:/productos";
+		logger.info("Se ha borrado un producto");
+		return "redirect:/productos/lista";
 	}
 	
 	@GetMapping("/lista")
@@ -235,7 +245,8 @@ public class ProductosController {
 		session.setAttribute("carrito", null);
 		//System.out.println("compra realizada");
 		model.addAttribute("mensajeCompra","compra realizada");
-		return "redirect:/productos";
+		logger.info("Se ha realizado una compra");
+		return "redirect:/pedidos/pedido";
 	}
 	
 	@GetMapping("/vaciar")
@@ -270,6 +281,7 @@ public class ProductosController {
 		for (Productos productos : lista) {
 			totalLinea= productos.getPrecio() * carrito.get(productos.getId());
 			totalLinea+= totalLinea*(productos.getImpuesto()/100);
+			totalLinea=Math.round(totalLinea*100)/100;
 			dped = new DetallesPedido(ped.getId(), productos.getId(), productos.getPrecio().floatValue(), carrito.get(productos.getId()), productos.getImpuesto(), totalLinea);
 			totalPedido+=totalLinea;
 			dpeds.guardarDPedido(dped);

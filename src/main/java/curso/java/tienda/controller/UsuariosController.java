@@ -3,6 +3,8 @@ package curso.java.tienda.controller;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ public class UsuariosController {
 	private Utilidades ut;
 	@Autowired
 	private RolesService rs;
+	private static final Logger logger = LogManager.getLogger(UsuariosController.class);
 	
 	@GetMapping("/clientes")
 	public String listaClientes(Model model, HttpSession sesion) {
@@ -35,6 +38,7 @@ public class UsuariosController {
 		model.addAttribute("opciones",ut.menu(sesion));
 		model.addAttribute("configuracion",ut.mapaConf());
 		model.addAttribute("listaUsuarios",us.getUsuarioRol(rs.buscarRolNombre("Cliente").getId()));
+		model.addAttribute("titulo","Listado de Clientes");
 		return "usuarios/lista";
 	}
 	
@@ -44,6 +48,7 @@ public class UsuariosController {
 		model.addAttribute("opciones",ut.menu(sesion));
 		model.addAttribute("configuracion",ut.mapaConf());
 		model.addAttribute("listaUsuarios",us.getUsuarioRol(rs.buscarRolNombre("Empleado").getId()));
+		model.addAttribute("titulo","Listado de Empleados");
 		return "usuarios/lista";
 	}
 	
@@ -63,6 +68,7 @@ public class UsuariosController {
 		model.addAttribute("opciones",ut.menu(sesion));
 		model.addAttribute("configuracion",ut.mapaConf());
 		model.addAttribute("modo","cliente");
+		model.addAttribute("titulo","Crear Cliente");
 		return "usuarios/usuario";
 	}
 	
@@ -79,6 +85,7 @@ public class UsuariosController {
 		model.addAttribute("configuracion",ut.mapaConf());
 		model.addAttribute("modo","modificar");
 		model.addAttribute("idUsuario",id);
+		model.addAttribute("titulo","Modificar Usuario");
 		return "usuarios/usuario";
 	}
 	
@@ -89,6 +96,7 @@ public class UsuariosController {
 		model.addAttribute("opciones",ut.menu(sesion));
 		model.addAttribute("configuracion",ut.mapaConf());
 		model.addAttribute("modo","empleado");
+		model.addAttribute("titulo","Crear Empleado");
 		return "usuarios/usuario";
 	}
 	
@@ -99,6 +107,7 @@ public class UsuariosController {
 		usuario.setClave(pass);
 		usuario.setIdRol(rs.buscarRolNombre("Empleado").getId());
 		us.guardarUsuario(usuario);
+		logger.info("Se ha creado un nuevo empleado");
 		return "redirect:/productos";
 	}
 	
@@ -109,18 +118,21 @@ public class UsuariosController {
 		usuario.setClave(pass);
 		usuario.setIdRol(rs.buscarRolNombre("Cliente").getId());
 		us.guardarUsuario(usuario);
+		logger.info("Se ha creado un nuevo cliente");
 		return "redirect:/productos";
 	}
 	
 	@GetMapping("/borrar/{id}")
 	public String deleteUsuario(Model model, @PathVariable("id") int id) {
 		us.borrarUsuario(id);
+		logger.info("Se ha borrado un usuario");
 		return "redirect:/productos";
 	}
 	
 	@PostMapping("/update/{id}")
 	public String updateUsuario(Model model, HttpSession sesion, @PathVariable("id") int id, @ModelAttribute Usuarios usuario) {
 		us.actualizarUsuario(usuario, id);
+		logger.info("Se ha modificado un usuario");
 		return "redirect:/productos";
 	}
 	

@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +34,12 @@ public class DetallesPedidosController {
 	private ProductosService prods;
 	@Autowired
 	private Utilidades ut;
+	private static final Logger logger = LogManager.getLogger(DetallesPedidosController.class);
 	
 	@GetMapping("/{idPedido}")
 	public String verPedidoDetallado(Model model, @PathVariable("idPedido") int idPedido, HttpSession sesion) {
+		
+		logger.info("Accediendo a los detalles del pedido.");
 		
 		List<DetallesPedido> lineas = dps.buscarLineasPedido(idPedido);
 		HashMap<Integer, String> listaIds = new HashMap<Integer, String>();
@@ -58,6 +63,8 @@ public class DetallesPedidosController {
 	@GetMapping("/{idPedido}/{idLinea}")
 	public String eliminarLinea(Model model, @PathVariable("idPedido") int idPedido, @PathVariable("idLinea") int idLinea, HttpSession sesion) {
 	
+		logger.info("Eliminada linea del pedido.");
+		
 		Pedidos pedido = ps.buscarPedido(idPedido);
 		if(!pedido.getEstado().equals("pendiente")) {
 			return "redirect:/pedidos/pedido";
